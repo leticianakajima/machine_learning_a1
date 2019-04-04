@@ -1,0 +1,72 @@
+# Assignment 1
+
+## 2.1
+Is there a particular feature where equality based splitting makes more sense?
+
+* Yes, there is.
+    * You would want to do equality based splitting for "categorical" features where the features have been split in multiple columns
+    * The only values are 0 and 1, so it doesn't make much sense to do threshold based splitting
+
+## 2.2
+Mode predictor error: 0.415
+
+Decision stump with inequality rule error: 0.380
+
+Decision stump with threshold rule error: 0.265
+
+## 2.4
+
+* For our naive implementation:
+    * As we continue to train trees with higher depth, we experience overfitting
+    * Our model becomes too specific and begins to predict based on particular pecuiliarities of our training dataset
+    * Turns out this isn't very accurate when applied to other data that we haven't seen before
+        * Hence our success rate stays constant (in some cases, the accuracy would get even worse)
+
+* For sckit-learn implementation:
+    * sckit-learn doesn't use accuracy score to build their decision trees. 
+    * sckit-learn uses information gain as their approach.
+  
+Information gain cares about the number of examples that get split into each branch for a given rule. For example, if we have a rule that splits our dataset 90-10, and a rule that splits our dataset 60-40, a decision tree using information gain would pick the latter rule, even if it has a lower accuracy score.
+
+This is because by having a rule that more evenly splits the dataset, we learn more about how to classify an example. If we have a rule that doesn't split our dataset very evenly, then essentially we are only classifying a few specific examples which doesn't teach us very much. This allows the model that uses information gain to be much more accurate when generalized to new data as opposed to the accuracy score. 
+
+## 2.5
+
+We know that creating a decision stump (with the best rule) costs O(ndlogn) time.
+
+* However, each object appears only once at each depth. We always have n objects at each depth.
+  * This is because we split the dataset. 
+    * As an example, for depth = 2, let's say we get two datasets of n/2
+      * The runtime would be O(d(n/2)log(n/2)) + O(d(n/2)log(n/2)), which ultimately just sums up to O(ndlogn)
+        * Hence, the runtime is O(mndlogn)
+
+## 4.1
+
+* k = 1
+  * 0.0645
+* k = 3
+  * 0.066
+* k = 10
+  * 0.097
+
+Much lower than the decision tree.
+
+4. The training error is 0 for k = 1 because the absolute most nearest neighbor is the training point itself.
+
+5. Use a validation set to see which k gets the smallest validation error, then pick that k. Also use cross-validation, as this will reduce the chances that we get a low validation error due to by chance being able to predict a specific validation set well.
+
+## 4.2
+
+1. Took around 30 seconds to a minute.
+* KNN took way too long to find out, so I ctrl+c'd.
+
+2. Training error for CNN (k = 1) is 0.0075. Testing error for CNN (k = 1) is 0.0175. There were 457 objects in the subset.
+
+4. Subset may not contain the training point being looked at, hence the most nearest neighbor is no longer the training point itself, leading to possible mislabelling.
+
+5. The runtime is O(tsd). For every t, we have to compare the distances between all the examples in s, and choose the closest ones.
+
+6. citiesBig2 likely has a very wide distribution. The higher the distribution, the bigger proportion of examples we're likely to get wrong, because each example is less representative of the other examples. If we had a smaller distribution, we'd be able to generally classify more using less examples.
+
+7. Yes, it works, and is quite fast. In fact, the speed is comparable to CNN (or perhaps even faster). It is also more accurate, so I'd prefer using decision trees for this. Perhaps our training dataset model just so happened to be good at predicting our testing dataset model, which seems slightly odd.
+
