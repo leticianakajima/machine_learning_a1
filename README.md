@@ -1,5 +1,5 @@
 # machine_learning_a1
-learning to get summary statistics from data and comparing 2 datasets. Implementing decision trees, producing training &amp; testing error curves and calculating the cost of fitting a decision tree
+Learning to get summary statistics from data and comparing 2 datasets. Implementing decision trees, producing training &amp; testing error curves and calculating the cost of fitting a decision tree.
 
 Files:
 
